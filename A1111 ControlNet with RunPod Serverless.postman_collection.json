@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "b1d721a6-f9c9-4b88-a06a-9f3de8f8135e",
+		"name": "A1111 ControlNet with RunPod Serverless",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {",
+							"    let template = `<a href=\"https://generativelabs.co/\">@GenerativeLabs</a>",
+							"    <div style='font-weight:bold;'>{{status}}</div>",
+							"    <img src='data:image/png;base64, {{img}}'/>",
+							"    `;",
+							"",
+							"    pm.visualizer.set(template, { ",
+							"        img: pm.response.json()[\"output\"][\"images\"][0],",
+							"        status: pm.response.json()[\"status\"]",
+							"    });",
+							"} catch(e) {",
+							"    //console.log(\"Couldn't yet load template.\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{api_key}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.runpod.ai/v2/{{serverless_api_id}}/status/c4878835-94ee-4051-8afd-81de8066caa2",
+					"protocol": "https",
+					"host": [
+						"api",
+						"runpod",
+						"ai"
+					],
+					"path": [
+						"v2",
+						"{{serverless_api_id}}",
+						"status",
+						"c4878835-94ee-4051-8afd-81de8066caa2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run (async)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{api_key}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"input\": {\n        \"api_name\": \"txt2img\",\n        \"prompt\": \"dungeons and dragons epic movie poster barbarian woman with cape charging into battle violent roar riding a vicious ice [wolf|tiger] beast leather and fur boots warriors and red banners (windy dust debris storm:1.1) volumetric lighting fog depth mist pass z pass great stone castle very bright morning sunlight from side, (masterpiece) (best quality) (detailed) (8k) (cinematic lighting) (sharp focus) (intricate)\",\n        \"restore_faces\": true,\n        \"negative_prompt\": \"(horse weapon axe club sword staff:1.3), (nude) (bad hands) (disfigured) (grain) (deformed) (poorly drawn) (mutilated) (lowres) (lowpoly) (blurry) (out-of-focus) (duplicate) (frame) (border) (watermark) (label) (signature) (text) (cropped) (artifacts)\",\n        \"seed\": -1,\n        \"override_settings\": {\n            \"sd_model_checkpoint\": \"\"\n        },\n        \"cfg_scale\": 5,\n        \"sampler_index\": \"DDIM\",\n        \"num_inference_steps\": 20,\n        \"email\": \"test@example.com\"\n     }\n}"
+				},
+				"url": {
+					"raw": "https://api.runpod.ai/v2/{{serverless_api_id}}/run",
+					"protocol": "https",
+					"host": [
+						"api",
+						"runpod",
+						"ai"
+					],
+					"path": [
+						"v2",
+						"{{serverless_api_id}}",
+						"run"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run (async w/ webook)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{api_key}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"webhook\": \"https://your-callback-url/endpoint\",\n    \"input\": {\n        \"api_name\": \"txt2img\",\n        \"prompt\": \"dungeons and dragons epic movie poster barbarian woman with cape charging into battle violent roar riding a vicious ice [wolf|tiger] beast leather and fur boots warriors and red banners (windy dust debris storm:1.1) volumetric lighting fog depth mist pass z pass great stone castle very bright morning sunlight from side, (masterpiece) (best quality) (detailed) (8k) (cinematic lighting) (sharp focus) (intricate)\",\n        \"restore_faces\": true,\n        \"negative_prompt\": \"(horse weapon axe club sword staff:1.3), (nude) (bad hands) (disfigured) (grain) (deformed) (poorly drawn) (mutilated) (lowres) (lowpoly) (blurry) (out-of-focus) (duplicate) (frame) (border) (watermark) (label) (signature) (text) (cropped) (artifacts)\",\n        \"seed\": 3302206224,\n        \"override_settings\": {\n            \"sd_model_checkpoint\": \"\"\n        },\n        \"cfg_scale\": 5,\n        \"sampler_index\": \"DDIM\",\n        \"num_inference_steps\": 20,\n        \"email\": \"test@example.com\"\n     }\n}"
+				},
+				"url": {
+					"raw": "https://api.runpod.ai/v2/{{serverless_api_id}}/run",
+					"protocol": "https",
+					"host": [
+						"api",
+						"runpod",
+						"ai"
+					],
+					"path": [
+						"v2",
+						"{{serverless_api_id}}",
+						"run"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run (sync)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {",
+							"    let template = `<a href=\"https://generativelabs.co/\">@GenerativeLabs</a>",
+							"    <div style='font-weight:bold;'>{{status}}</div>",
+							"    <img src='data:image/png;base64, {{img}}'/>",
+							"    `;",
+							"",
+							"    pm.visualizer.set(template, { ",
+							"        img: pm.response.json()[\"output\"][\"images\"][0],",
+							"        status: pm.response.json()[\"status\"]",
+							"    });",
+							"} catch(e) {",
+							"    //console.log(\"Couldn't yet load template.\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{api_key}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"input\": {\n        \"api_name\": \"txt2img\",\n        \"prompt\": \"dungeons and dragons epic movie poster barbarian woman with cape charging into battle violent roar riding a vicious ice [wolf|tiger] beast leather and fur boots warriors and red banners (windy dust debris storm:1.1) volumetric lighting fog depth mist pass z pass great stone castle very bright morning sunlight from side, (masterpiece) (best quality) (detailed) (8k) (cinematic lighting) (sharp focus) (intricate)\",\n        \"restore_faces\": true,\n        \"negative_prompt\": \"(horse weapon axe club sword staff:1.3), (nude) (bad hands) (disfigured) (grain) (deformed) (poorly drawn) (mutilated) (lowres) (lowpoly) (blurry) (out-of-focus) (duplicate) (frame) (border) (watermark) (label) (signature) (text) (cropped) (artifacts)\",\n        \"seed\": 3302206224,\n        \"override_settings\": {\n            \"sd_model_checkpoint\": \"SDv1-5.ckpt\"\n        },\n        \"cfg_scale\": 5,\n        \"sampler_index\": \"DDIM\",\n        \"num_inference_steps\": 20,\n        \"email\": \"test@example.com\"\n     }\n}"
+				},
+				"url": {
+					"raw": "https://api.runpod.ai/v2/{{serverless_api_id}}/runsync",
+					"protocol": "https",
+					"host": [
+						"api",
+						"runpod",
+						"ai"
+					],
+					"path": [
+						"v2",
+						"{{serverless_api_id}}",
+						"runsync"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Run (sync) - ControlNet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {",
+							"    let template = `<a href=\"https://generativelabs.co/\">@GenerativeLabs</a>",
+							"    <div style='font-weight:bold;'>{{status}}</div>",
+							"    <img src='data:image/png;base64, {{img}}'/>",
+							"    `;",
+							"",
+							"    pm.visualizer.set(template, { ",
+							"        img: pm.response.json()[\"output\"][\"images\"][0],",
+							"        status: pm.response.json()[\"status\"]",
+							"    });",
+							"} catch(e) {",
+							"    //console.log(\"Couldn't yet load template.\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{api_key}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"input\": {\n        \"api_name\": \"txt2img\",\n        \"width\": 512,\n        \"height\": 512,\n        \"prompt\": \"rainbow vibrant colors\",\n        \"restore_faces\": true,\n        \"negative_prompt\": \"shadows, shades, (nude) (bad hands) (disfigured) (grain) (deformed) (poorly drawn) (mutilated) (lowres) (lowpoly) (blurry) (out-of-focus) (duplicate) (frame) (border) (watermark) (label) (signature) (text) (cropped) (artifacts)\",\n        \"seed\": -1,\n        \"override_settings\": {\n            \"sd_model_checkpoint\": \"SDv1-5.ckpt [4c86efd062]\"\n        },\n        \"cfg_scale\": 5,\n        \"sampler_name\": \"Euler\",\n        \"num_inference_steps\": 20,\n        \"email\": \"test@example.com\",\n        \"alwayson_scripts\": {\n            \"controlnet\": {\n                \"args\": [\n                    {\n                        \"module\": \"canny\",\n                        \"model\": \"control_v11p_sd15_canny [d14c016b]\",\n                        \"input_image\": \"PASTE YOUR BASE64 ENCODED STRING HERE\"\n                    }\n                ]\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "https://api.runpod.ai/v2/{{serverless_api_id}}/runsync",
+					"protocol": "https",
+					"host": [
+						"api",
+						"runpod",
+						"ai"
+					],
+					"path": [
+						"v2",
+						"{{serverless_api_id}}",
+						"runsync"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "serverless_api_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "api_key",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
